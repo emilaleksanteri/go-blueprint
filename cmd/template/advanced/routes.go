@@ -25,6 +25,9 @@ var reactTailwindAppFile []byte
 //go:embed files/react/app.tsx.tmpl
 var reactAppFile []byte
 
+//go:embed files/svelte/app.svelte.tmpl
+var svelteAppFile []byte
+
 //go:embed files/tailwind/input.css.tmpl
 var inputCssTemplate []byte
 
@@ -133,6 +136,10 @@ func ReactTailwindAppfile() []byte {
 
 func ReactAppfile() []byte {
 	return reactAppFile
+}
+
+func SvelteAppFile() []byte {
+	return svelteAppFile
 }
 
 func InputCssTemplateReact() []byte {
