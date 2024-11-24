@@ -15,7 +15,7 @@ services:
     volumes:
       - sqlite_bp:/app/db
 {{- end }}
-{{- if .AdvancedOptions.react }}
+{{- if (or .AdvancedOptions.react .AdvancedOptions.svelte)}}
   frontend:
     build:
       context: .
