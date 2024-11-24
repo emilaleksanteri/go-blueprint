@@ -993,6 +993,8 @@ func (p *Project) CreateViteSvelteProject(projectPath string) error {
 			return fmt.Errorf("failed to write App.svelte template: %w", err)
 		}
 
+		// by default the svelte-ts example makes this counter component, to style it with tailwind this will override it with the
+		// same component but just styled using tailwind
 		libDir := filepath.Join(srcDir, "lib")
 		if err := os.WriteFile(filepath.Join(libDir, "Counter.svelte"), advanced.SvelteCounterComponentTailwind(), 0644); err != nil {
 			return fmt.Errorf("failed to write Counter.svelte template: %w", err)
