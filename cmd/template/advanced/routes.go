@@ -25,6 +25,18 @@ var reactTailwindAppFile []byte
 //go:embed files/react/app.tsx.tmpl
 var reactAppFile []byte
 
+//go:embed files/svelte/tailwind/tailwind.config.js.tmpl
+var svelteTailwindConfigTemplate []byte
+
+//go:embed files/svelte/tailwind/app.css.tmpl
+var inputCssTempalteSvelte []byte
+
+//go:embed files/svelte/tailwind/counter.svelte.tmpl
+var svelteCounterComponentTailwind []byte
+
+//go:embed files/svelte/tailwind/app.svelte.tmpl
+var svelteTailwindAppFile []byte
+
 //go:embed files/svelte/app.svelte.tmpl
 var svelteAppFile []byte
 
@@ -138,12 +150,28 @@ func ReactAppfile() []byte {
 	return reactAppFile
 }
 
+func InputCssTemplateReact() []byte {
+	return inputCssTemplateReact
+}
+
+func SvelteTailwindConfigTemplate() []byte {
+	return svelteTailwindConfigTemplate
+}
+
+func SvelteTailwindAppFile() []byte {
+	return svelteTailwindAppFile
+}
+
 func SvelteAppFile() []byte {
 	return svelteAppFile
 }
 
-func InputCssTemplateReact() []byte {
-	return inputCssTemplateReact
+func InputCssTemplateSvelte() []byte {
+	return inputCssTempalteSvelte
+}
+
+func SvelteCounterComponentTailwind() []byte {
+	return svelteCounterComponentTailwind
 }
 
 func InputCssTemplate() []byte {

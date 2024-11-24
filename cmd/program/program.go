@@ -423,7 +423,7 @@ func (p *Project) CreateMainFile() error {
 			return fmt.Errorf("failed to set up React project: %w", err)
 		}
 
-		//svelte
+		p.AdvancedOptions[string(flags.Tailwind)] = false
 	}
 
 	if p.AdvancedOptions[string(flags.Tailwind)] {
@@ -954,13 +954,12 @@ func (p *Project) CreateViteSvelteProject(projectPath string) error {
 	}
 
 	if err := os.WriteFile(filepath.Join(srcDir, "App.svelte"), advanced.SvelteAppFile(), 0644); err != nil {
-		return fmt.Errorf("failed to write App.tsx template: %w", err)
+		return fmt.Errorf("failed to write App.svelte template: %w", err)
 	}
 
-	// TODO
 	// Handle Tailwind configuration if selected
 	if p.AdvancedOptions[string(flags.Tailwind)] {
-		fmt.Println("Tailwind selected. Configuring with React...")
+		fmt.Println("Tailwind selected. Configuring with Svelte...")
 		cmd := exec.Command("npm", "install", "-D", "tailwindcss", "postcss", "autoprefixer")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
@@ -975,7 +974,7 @@ func (p *Project) CreateViteSvelteProject(projectPath string) error {
 		}
 
 		// use the tailwind config file
-		err = os.WriteFile("tailwind.config.js", advanced.ReactTailwindConfigTemplate(), 0644)
+		err = os.WriteFile("tailwind.config.js", advanced.SvelteTailwindConfigTemplate(), 0644)
 		if err != nil {
 			return fmt.Errorf("failed to write tailwind config: %w", err)
 		}
@@ -985,20 +984,18 @@ func (p *Project) CreateViteSvelteProject(projectPath string) error {
 			return fmt.Errorf("failed to create src directory: %w", err)
 		}
 
-		err = os.WriteFile(filepath.Join(srcDir, "index.css"), advanced.InputCssTemplateReact(), 0644)
+		err = os.WriteFile(filepath.Join(srcDir, "app.css"), advanced.InputCssTemplateSvelte(), 0644)
 		if err != nil {
-			return fmt.Errorf("failed to update index.css: %w", err)
+			return fmt.Errorf("failed to update app.css: %w", err)
 		}
 
-		if err := os.WriteFile(filepath.Join(srcDir, "App.tsx"), advanced.ReactTailwindAppfile(), 0644); err != nil {
-			return fmt.Errorf("failed to write App.tsx template: %w", err)
+		if err := os.WriteFile(filepath.Join(srcDir, "App.svelte"), advanced.SvelteTailwindAppFile(), 0644); err != nil {
+			return fmt.Errorf("failed to write App.svelte template: %w", err)
 		}
 
-		if err := os.Remove(filepath.Join(srcDir, "App.css")); err != nil {
-			// Don't return error if file doesn't exist
-			if !os.IsNotExist(err) {
-				return fmt.Errorf("failed to remove App.css: %w", err)
-			}
+		libDir := filepath.Join(srcDir, "lib")
+		if err := os.WriteFile(filepath.Join(libDir, "Counter.svelte"), advanced.SvelteCounterComponentTailwind(), 0644); err != nil {
+			return fmt.Errorf("failed to write Counter.svelte template: %w", err)
 		}
 
 		// set to false to not re-do in next step
